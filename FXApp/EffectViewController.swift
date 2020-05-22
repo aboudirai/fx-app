@@ -20,7 +20,12 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         playVideo()
+    }
+    
+    private func setupNavigationBar(){
+        navigationItem.hidesBackButton = true
     }
     
     private func playVideo(){
@@ -81,7 +86,7 @@ extension EffectViewController {
     }
     
     func effectPixellate(raw: AVAsset) -> AVVideoComposition {
-        let filter = CIFilter(name: "CIPixellize")!
+        let filter = CIFilter(name: "CIPixellate")!
 
         return effectSingleFilter(raw: raw, filter: filter)
     }
