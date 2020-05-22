@@ -26,20 +26,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     private func playVideo(){
         let asset = AVAsset(url: url!)
         
-        let filter = CIFilter(name: "CIColorControls", parameters: [
-            kCIInputSaturationKey: 0
-        ])!
-        
-        //let filter = CIFilter(name: "CIZoomBlur")!
-        
-        let comp = AVVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
-            let source = request.sourceImage.clampedToExtent()
-            filter.setValue(source, forKey: kCIInputImageKey)
-            
-            let output = filter.outputImage!
-            
-            request.finish(with: output, context: nil)
-        })
+        let comp = applyEffect(asset: asset, effect: "Pixel")
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
@@ -50,54 +37,77 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         looper = AVPlayerLooper(player: player, templateItem: item)
         
         player.play()
-        }
-    
-    func applyEffect(media: UIImage, effect: String) -> UIImage {
-        switch effect {
-        case "None":
-            return media
-        case "B&W":
-            return imageEffectBW(image: media)
-        case "Tile":
-            return imageEffectAffineTile(image: media)
-        case "Zoom":
-            return imageEffectZoomBlur(image: media)
-        default:
-            return media
-        }
     }
     
-    func imageEffectBW(image: UIImage) -> UIImage {
-        let convertedImage = CIImage(image: image)
+    private func applyEffect(asset: AVAsset, effect: String) -> AVVideoComposition {
+        switch effect {
+        case "None":
+            return effectNone(raw: asset)
+        case "B&W":
+            return effectBW(raw: asset)
+        case "Tile":
+            return effectAffineTile(raw: asset)
+        case "Zoom":
+            return effectZoomBlur(raw: asset)
+        case "Pixel":
+            return effectPixellate(raw: asset)
+        default:
+            return effectNone(raw: asset)
+        }
+    }
+}
+
+//Effects
+extension EffectViewController {
+    
+    func effectNone(raw: AVAsset) -> AVVideoComposition {
+        let filter = CIFilter(name: "CIColorControls")!
+
+        return effectSingleFilter(raw: raw, filter: filter)
+    }
+    
+    func effectBW(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIColorControls", parameters: [
-            kCIInputImageKey : convertedImage!,
             kCIInputSaturationKey: 0
         ])!
 
-        return UIImage(ciImage: filter.outputImage!)
+        return effectSingleFilter(raw: raw, filter: filter)
     }
     
-    func imageEffectZoomBlur(image: UIImage) -> UIImage {
-        let convertedImage = CIImage(image: image)
+    func effectZoomBlur(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIZoomBlur")!
 
-        filter.setValue(convertedImage, forKey: kCIInputImageKey)
-        
-        return UIImage(ciImage: filter.outputImage!)
+        return effectSingleFilter(raw: raw, filter: filter)
     }
     
-    func imageEffectAffineTile(image: UIImage) -> UIImage {
-        let convertedImage = CIImage(image: image)
+    func effectPixellate(raw: AVAsset) -> AVVideoComposition {
+        let filter = CIFilter(name: "CIPixellize")!
+
+        return effectSingleFilter(raw: raw, filter: filter)
+    }
+    
+    func effectAffineTile(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIAffineTile")!
         
-        filter.setValue(convertedImage, forKey: kCIInputImageKey)
         //filter.setValue(CIVector(x: rawImageView.frame.width, y: rawImageView.frame.height), forKey: kCIAttributeTypePosition)
         //filter.setValue(5.0, forKey: kCIAttributeTypeDistance)
 
-        return UIImage(ciImage: filter.outputImage!)
+        return effectSingleFilter(raw: raw, filter: filter)
     }
     
+    func effectSingleFilter(raw: AVAsset, filter: CIFilter) -> AVVideoComposition {
+        let comp = AVVideoComposition(asset: raw, applyingCIFiltersWithHandler: { request in
+            let source = request.sourceImage.clampedToExtent()
+            filter.setValue(source, forKey: kCIInputImageKey)
+            
+            let output = filter.outputImage!
+            
+            request.finish(with: output, context: nil)
+        })
+        return comp
+    }
 }
+
 /*
     func registerNib() {
         let nib = UINib(nibName: EffectCollectionViewCell.nibName, bundle: nil)
