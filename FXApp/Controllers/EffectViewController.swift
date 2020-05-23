@@ -19,9 +19,14 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        effectView.backgroundColor = .white
+        effectView.backgroundColor = .black
         setupNavigationBar()
         playVideo()
+    }
+    
+    //NOT WORKING**
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     private func setupNavigationBar(){
@@ -33,7 +38,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     private func playVideo(){
         let asset = AVAsset(url: url!)
         
-        let comp = applyEffect(asset: asset, effect: "Pixel")
+        let comp = applyEffect(asset: asset, effect: "None")
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp

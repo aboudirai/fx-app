@@ -26,7 +26,9 @@ class PlaybackView: UIView {
         //Playing Video on Loop
         player = AVQueuePlayer(playerItem: item)
         let playerLayer: AVPlayerLayer = AVPlayerLayer(player: player)
-        //playerLayer.cornerRadius = 20
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect //Scale video
+        playerLayer.cornerRadius = 15
+        playerLayer.masksToBounds = true
         self.layer.addSublayer(playerLayer)
         playerLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         looper = AVPlayerLooper(player: player!, templateItem: item)
