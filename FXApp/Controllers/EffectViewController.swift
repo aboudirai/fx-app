@@ -38,11 +38,14 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
+        let player = AVQueuePlayer(playerItem: item)
         
         //Create PlaybackView
         let height = effectView.frame.width * 16 / 9
         let videoFrame = CGRect(x: 0, y: 35, width: effectView.frame.width, height: height)
-        let videoView = PlaybackView(frame: videoFrame, item: item)
+        let videoView = PlaybackView(frame: videoFrame, item: item, player: player)
+        looper = AVPlayerLooper(player: player, templateItem: item)
+        
         effectView.addSubview(videoView)
         
     }

@@ -10,18 +10,16 @@ import UIKit
 import AVFoundation
 
 class PlaybackView: UIView {
-
-    init(frame: CGRect, item: AVPlayerItem){
+    
+    init(frame: CGRect, item: AVPlayerItem, player: AVQueuePlayer){
         super.init(frame: frame)
         
         backgroundColor = .black
         
-        let player = AVQueuePlayer(playerItem: item)
         let playerLayer: AVPlayerLayer = AVPlayerLayer(player: player)
         //playerLayer.cornerRadius = 20
         self.layer.addSublayer(playerLayer)
         playerLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        let looper = AVPlayerLooper(player: player, templateItem: item)
         
         player.play()
     }
