@@ -18,6 +18,7 @@
 		7E0813892469D748001CD8D1 /* EffectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E0813882469D748001CD8D1 /* EffectViewController.xib */; };
 		7E081394246B625A001CD8D1 /* EffectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E081392246B625A001CD8D1 /* EffectCollectionViewCell.swift */; };
 		7E081395246B625A001CD8D1 /* EffectCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E081393246B625A001CD8D1 /* EffectCollectionViewCell.xib */; };
+		7EF939AF24794248008A9F05 /* PlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF939AE24794248008A9F05 /* PlaybackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		7E0813882469D748001CD8D1 /* EffectViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EffectViewController.xib; sourceTree = "<group>"; };
 		7E081392246B625A001CD8D1 /* EffectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E081393246B625A001CD8D1 /* EffectCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EffectCollectionViewCell.xib; sourceTree = "<group>"; };
+		7EF939AE24794248008A9F05 /* PlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,14 +107,11 @@
 		7E0813532469A65F001CD8D1 /* FXApp */ = {
 			isa = PBXGroup;
 			children = (
+				7EF939AB247941D1008A9F05 /* Views */,
+				7EF939AA247941B1008A9F05 /* XIBs */,
+				7EF939A82479417E008A9F05 /* Controllers */,
 				7E0813542469A65F001CD8D1 /* AppDelegate.swift */,
 				7E0813562469A65F001CD8D1 /* SceneDelegate.swift */,
-				7E0813582469A65F001CD8D1 /* ViewController.swift */,
-				7E0813842469ADA7001CD8D1 /* EffectViewController.swift */,
-				7E081392246B625A001CD8D1 /* EffectCollectionViewCell.swift */,
-				7E081393246B625A001CD8D1 /* EffectCollectionViewCell.xib */,
-				7E0813862469D6E5001CD8D1 /* ViewController.xib */,
-				7E0813882469D748001CD8D1 /* EffectViewController.xib */,
 				7E08135D2469A664001CD8D1 /* Assets.xcassets */,
 				7E0813622469A664001CD8D1 /* Info.plist */,
 			);
@@ -135,6 +134,34 @@
 				7E0813782469A665001CD8D1 /* Info.plist */,
 			);
 			path = FXAppUITests;
+			sourceTree = "<group>";
+		};
+		7EF939A82479417E008A9F05 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7E0813582469A65F001CD8D1 /* ViewController.swift */,
+				7E0813842469ADA7001CD8D1 /* EffectViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7EF939AA247941B1008A9F05 /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				7E081393246B625A001CD8D1 /* EffectCollectionViewCell.xib */,
+				7E0813862469D6E5001CD8D1 /* ViewController.xib */,
+				7E0813882469D748001CD8D1 /* EffectViewController.xib */,
+			);
+			path = XIBs;
+			sourceTree = "<group>";
+		};
+		7EF939AB247941D1008A9F05 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E081392246B625A001CD8D1 /* EffectCollectionViewCell.swift */,
+				7EF939AE24794248008A9F05 /* PlaybackView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E0813592469A65F001CD8D1 /* ViewController.swift in Sources */,
+				7EF939AF24794248008A9F05 /* PlaybackView.swift in Sources */,
 				7E0813852469ADA7001CD8D1 /* EffectViewController.swift in Sources */,
 				7E0813552469A65F001CD8D1 /* AppDelegate.swift in Sources */,
 				7E081394246B625A001CD8D1 /* EffectCollectionViewCell.swift in Sources */,

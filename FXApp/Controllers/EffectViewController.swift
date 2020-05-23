@@ -25,7 +25,9 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func setupNavigationBar(){
-        navigationItem.hidesBackButton = true
+        //navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     private func playVideo(){
@@ -35,13 +37,13 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
-        let player = AVQueuePlayer(playerItem: item)
-        let playerLayer: AVPlayerLayer = AVPlayerLayer(player: player)
-        EffectViewController.layer.addSublayer(playerLayer)
-        playerLayer.frame = EffectViewController.frame
-        looper = AVPlayerLooper(player: player, templateItem: item)
         
-        player.play()
+        //Create PlaybackView
+        let height = EffectViewController.frame.width * 16 / 9
+        let videoFrame = CGRect(x: 0, y: 0, width: EffectViewController.frame.width, height: height)
+        let videoView = PlaybackView(frame: videoFrame, item: item)
+        EffectViewController.addSubview(videoView)
+        
     }
     
     private func applyEffect(asset: AVAsset, effect: String) -> AVVideoComposition {
