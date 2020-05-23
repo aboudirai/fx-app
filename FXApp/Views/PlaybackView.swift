@@ -18,16 +18,14 @@ class PlaybackView: UIView {
         
         let player = AVQueuePlayer(playerItem: item)
         let playerLayer: AVPlayerLayer = AVPlayerLayer(player: player)
-        playerLayer.cornerRadius = 20
+        //playerLayer.cornerRadius = 20
         self.layer.addSublayer(playerLayer)
-        playerLayer.frame = self.frame
+        playerLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         let looper = AVPlayerLooper(player: player, templateItem: item)
         
         player.play()
     }
-    
-    
-    
+     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

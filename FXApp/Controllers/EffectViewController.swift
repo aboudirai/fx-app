@@ -12,7 +12,7 @@ import AVFoundation
 
 class EffectViewController: UIViewController, UINavigationControllerDelegate {
     
-    @IBOutlet var EffectViewController: UIView!
+    @IBOutlet var effectView: UIView!
     var url: URL?
     //@IBOutlet weak var effectCollection: UICollectionView!
     var names = ["Blur", "Old Film", "Black & White", "Test1", "Test2", "Test3"]
@@ -20,6 +20,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        effectView.backgroundColor = .white
         setupNavigationBar()
         playVideo()
     }
@@ -39,10 +40,10 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         item.videoComposition = comp
         
         //Create PlaybackView
-        let height = EffectViewController.frame.width * 16 / 9
-        let videoFrame = CGRect(x: 0, y: 0, width: EffectViewController.frame.width, height: height)
+        let height = effectView.frame.width * 16 / 9
+        let videoFrame = CGRect(x: 0, y: 35, width: effectView.frame.width, height: height)
         let videoView = PlaybackView(frame: videoFrame, item: item)
-        EffectViewController.addSubview(videoView)
+        effectView.addSubview(videoView)
         
     }
     

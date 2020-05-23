@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EffectViewController" customModule="FXApp" customModuleProvider="target">
             <connections>
-                <outlet property="EffectViewController" destination="iN0-l3-epB" id="hvD-6x-py8"/>
+                <outlet property="effectView" destination="iN0-l3-epB" id="wIv-vH-ooZ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="77H-sR-Wcn"/>
             </connections>
         </placeholder>
