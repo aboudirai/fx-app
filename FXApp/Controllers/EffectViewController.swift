@@ -38,7 +38,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     private func playVideo(){
         let asset = AVAsset(url: url!)
         
-        let comp = applyEffect(asset: asset, effect: "None")
+        let comp = applyEffect(asset: asset, effect: "Distort")
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
@@ -63,6 +63,8 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
             return effectZoomBlur(raw: asset)
         case "Pixel":
             return effectPixellate(raw: asset)
+        case "Distort":
+            return effectDistort(raw: asset)
         default:
             return effectNone(raw: asset)
         }
@@ -103,6 +105,12 @@ extension EffectViewController {
         
         //filter.setValue(CIVector(x: rawImageView.frame.width, y: rawImageView.frame.height), forKey: kCIAttributeTypePosition)
         //filter.setValue(5.0, forKey: kCIAttributeTypeDistance)
+
+        return effectSingleFilter(raw: raw, filter: filter)
+    }
+    
+    func effectDistort(raw: AVAsset) -> AVVideoComposition {
+        let filter = CIFilter(name: "CIBumpDistortion")!
 
         return effectSingleFilter(raw: raw, filter: filter)
     }

@@ -7,9 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController" customModule="FXApp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
             <connections>
-                <outlet property="ViewController" destination="iN0-l3-epB" id="CVd-2l-bib"/>
+                <outlet property="mainView" destination="iN0-l3-epB" id="542-kY-04t"/>
                 <outlet property="view" destination="iN0-l3-epB" id="nwm-pm-rC3"/>
             </connections>
         </placeholder>

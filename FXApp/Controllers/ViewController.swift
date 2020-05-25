@@ -11,7 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet var ViewController: UIView!
+    @IBOutlet var mainView: UIView!
     @IBAction func captureMedia(sender: UIButton) {
         picker.allowsEditing = false
         picker.sourceType = .camera
@@ -37,6 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     private func setupNavigationBar(){
+        //self.navigationItem.backBarButtonItem?.setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 100, vertical: 0), for: UIBarMetrics.default) //NOT WORKING
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor.white
     }
