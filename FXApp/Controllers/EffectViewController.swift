@@ -16,6 +16,8 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     var url: URL?
     //@IBOutlet weak var effectCollection: UICollectionView!
     var names = ["Blur", "Old Film", "Black & White", "Test1", "Test2", "Test3"]
+    var vidWidth: CGFloat?
+    var vidHeight: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +38,17 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func playVideo(){
-        let asset = AVAsset(url: url!)
+        vidWidth = effectView.frame.width
+        vidHeight = vidWidth! * 16 / 9
         
+        let asset = AVAsset(url: url!)
         let comp = applyEffect(asset: asset, effect: "Distort")
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
         
         //Create PlaybackView
-        let height = effectView.frame.width * 16 / 9
-        let videoFrame = CGRect(x: 0, y: 35, width: effectView.frame.width, height: height)
+        let videoFrame = CGRect(x: 0, y: 35, width: vidWidth!, height: vidHeight!)
         let videoView = PlaybackView(frame: videoFrame, item: item)
         
         effectView.addSubview(videoView)
@@ -111,7 +114,9 @@ extension EffectViewController {
     
     func effectDistort(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIBumpDistortion")!
-
+        filter.setValue(CIVector(x: vidWidth!, y: vidHeight!), forKey: kCIInputCenterKey)
+        filter.setValue(1.0, forKey: kCIInputScaleKey)
+        
         return effectSingleFilter(raw: raw, filter: filter)
     }
     
