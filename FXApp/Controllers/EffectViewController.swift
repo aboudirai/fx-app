@@ -43,7 +43,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         vidHeight = vidWidth! * 16 / 9
         
         let asset = AVAsset(url: url!)
-        let comp = applyEffect(asset: asset, effect: "Distort")
+        let comp = applyEffect(asset: asset, effect: "Conv")
         
         let item = AVPlayerItem(asset: asset)
         item.videoComposition = comp
@@ -69,6 +69,8 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
             return effectPixellate(raw: asset)
         case "Distort":
             return effectDistort(raw: asset)
+        case "Conv":
+            return effectConv9(raw: asset)
         default:
             return effectNone(raw: asset)
         }
@@ -82,6 +84,19 @@ extension EffectViewController {
         let filter = CIFilter(name: "CIColorControls")!
 
         return effectSingleFilter(raw: raw, filter: filter)
+    }
+    
+    //Going for Retro VHS look
+    func effectConv9(raw: AVAsset) -> AVVideoComposition {
+        let filter1 = CIFilter(name: "CIConvolution9Vertical", parameters: [
+            kCIInputWeightsKey: CIVector(values: [0, -2, 0, -2, 9, -2, 0, -2, 0], count: 9)
+        ])!
+        
+        let filter2 = CIFilter(name: "CIBloom")!
+        filter2.setValue(1, forKey: kCIInputIntensityKey)
+        
+        return effectSingleFilter(raw: raw, filter: filter1)
+        //return effectMultipleFilters(raw: raw, filters: [filter1, filter2])
     }
     
     func effectBW(raw: AVAsset) -> AVVideoComposition {
@@ -171,6 +186,22 @@ extension EffectViewController {
             let output = filter.outputImage!
             
             request.finish(with: output, context: nil)
+        })
+        return comp
+    }
+    
+    func effectMultipleFilters(raw: AVAsset, filters: [CIFilter]) -> AVVideoComposition {
+        let comp = AVVideoComposition(asset: raw, applyingCIFiltersWithHandler: { request in
+            let source = request.sourceImage.clampedToExtent()
+            
+            var output: CIImage? = source
+            
+            filters.forEach { fil in
+                fil.setValue(output, forKey: kCIInputImageKey)
+                output = fil.outputImage!
+            }
+            
+            request.finish(with: output!, context: nil)
         })
         return comp
     }
