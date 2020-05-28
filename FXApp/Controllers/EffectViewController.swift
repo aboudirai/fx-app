@@ -49,7 +49,7 @@ class EffectViewController: UIViewController, UINavigationControllerDelegate {
         item.videoComposition = comp
         
         //Create PlaybackView
-        let videoFrame = CGRect(x: 0, y: 35, width: vidWidth!, height: vidHeight!)
+        let videoFrame = CGRect(x: 0, y: 45, width: vidWidth!, height: vidHeight!)
         let videoView = PlaybackView(frame: videoFrame, item: item)
         
         effectView.addSubview(videoView)
@@ -115,10 +115,10 @@ extension EffectViewController {
     
     func effectDistort(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIBumpDistortion")!
-        filter.setValue(CIVector(x: vidWidth! / 2, y: vidHeight! / 2), forKey: kCIInputCenterKey)
+        filter.setValue(CIVector(x: vidWidth!, y: vidHeight!), forKey: kCIInputCenterKey)
         filter.setValue(1.0, forKey: kCIInputScaleKey)
         
-        return effectFaceFilter(raw: raw, filter: filter)
+        return effectSingleFilter(raw: raw, filter: filter)
     }
     
     //Helper for applying face filters to video

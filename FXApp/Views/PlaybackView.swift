@@ -20,13 +20,13 @@ class PlaybackView: UIView {
         backgroundColor = .black
         
         //Adding Pause/Play Tap Gesture
-        let pauseGesture = UITapGestureRecognizer(target: self, action: #selector(self.pauseGestureHandler(sender:)))
+        let pauseGesture = UITapGestureRecognizer(target: self, action: #selector(pauseGestureHandler(sender:)))
         addGestureRecognizer(pauseGesture)
         
         //Playing Video on Loop
         player = AVQueuePlayer(playerItem: item)
         let playerLayer: AVPlayerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect //Scale video
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill //Scale video
         playerLayer.cornerRadius = 15
         playerLayer.masksToBounds = true
         self.layer.addSublayer(playerLayer)
