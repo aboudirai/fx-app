@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import AVFoundation
+import Vision
 
 class EffectViewController: UIViewController, UINavigationControllerDelegate {
     
@@ -114,12 +115,54 @@ extension EffectViewController {
     
     func effectDistort(raw: AVAsset) -> AVVideoComposition {
         let filter = CIFilter(name: "CIBumpDistortion")!
-        filter.setValue(CIVector(x: vidWidth!, y: vidHeight!), forKey: kCIInputCenterKey)
+        filter.setValue(CIVector(x: vidWidth! / 2, y: vidHeight! / 2), forKey: kCIInputCenterKey)
         filter.setValue(1.0, forKey: kCIInputScaleKey)
         
-        return effectSingleFilter(raw: raw, filter: filter)
+        return effectFaceFilter(raw: raw, filter: filter)
     }
     
+    //Helper for applying face filters to video
+    func effectFaceFilter(raw: AVAsset, filter: CIFilter) -> AVVideoComposition {
+        
+        let comp = AVVideoComposition(asset: raw, applyingCIFiltersWithHandler: { request in
+            let source = request.sourceImage.clampedToExtent()
+            print("testtestestestsetset")
+            
+            filter.setValue(source, forKey: kCIInputImageKey)
+            
+            let output = filter.outputImage!
+            
+            request.finish(with: output, context: nil)
+        })
+        
+        return comp
+        
+    }
+    
+    func detectFace(){
+        let faceRequest = VNDetectFaceRectanglesRequest { (req, err) in
+    
+            if let err = err {
+                print("Face detect failed:", err)
+                return
+            }
+            req.results?.forEach({ (res) in
+                guard let faceObs = res as? VNFaceObservation else { return }
+                print(faceObs.boundingBox)
+            })
+        }
+        /*
+        guard let cgImg = source.cgImage else { return }
+        let handler = VNImageRequestHandler(cgImage: cgImg, options: [:])
+        do {
+            try handler.perform([faceRequest])
+        } catch let reqErr {
+            print("Failed to perform request", reqErr)
+        }
+        */
+    }
+    
+    //Helper for applying filter to raw video
     func effectSingleFilter(raw: AVAsset, filter: CIFilter) -> AVVideoComposition {
         let comp = AVVideoComposition(asset: raw, applyingCIFiltersWithHandler: { request in
             let source = request.sourceImage.clampedToExtent()
@@ -131,6 +174,7 @@ extension EffectViewController {
         })
         return comp
     }
+    
 }
 
 /*
